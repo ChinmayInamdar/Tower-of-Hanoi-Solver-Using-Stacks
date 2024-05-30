@@ -1,0 +1,36 @@
+import java.util.*; // Importing the java.util package
+
+public class TowerOfHanoi { // Defining a class named TowerOfHanoi
+    static Stack<Integer> source = new Stack<>(); // Declaring a static stack named source to hold integers
+    static Stack<Integer> destination = new Stack<>(); // Declaring a static stack named destination to hold integers
+    static Stack<Integer> auxiliary = new Stack<>(); // Declaring a static stack named auxiliary to hold integers
+    static int moves = 0; // Declaring a static integer variable named moves and initializing it to 0
+
+    public static void main(String[] args) { // Main method
+        Scanner sc = new Scanner(System.in); // Creating a Scanner object to read input from the console
+        System.out.println("Enter the number of disks"); // Printing a prompt to the console
+        int n = sc.nextInt(); // Reading an integer input from the console and storing it in the variable n
+        initialiseSource(n); // Calling the initialiseSource method to initialize the source stack
+        towerOfHanoi(n, source, destination, auxiliary); // Calling the towerOfHanoi method to solve the Tower of Hanoi problem
+        System.out.println("Total number of moves: " + moves); // Printing the total number of moves to the console
+    }
+
+    public static void towerOfHanoi(int n, Stack<Integer> source, Stack<Integer> destination, Stack<Integer> auxiliary) {
+        // Method to solve the Tower of Hanoi problem recursively
+        if (n > 0) { // Base case: if there are disks to move
+            towerOfHanoi(n - 1, source, auxiliary, destination); // Move n-1 disks from source to auxiliary using destination as auxiliary
+            destination.push(source.pop()); // Move the nth disk from source to destination
+            System.out.println("Moved disk " + n + " from rod " + source + " to destination " + destination); // Print the move to the console
+            moves++; // Increment the moves counter
+            towerOfHanoi(n - 1, auxiliary, destination, source); // Move n-1 disks from auxiliary to destination using source as auxiliary
+        }
+    }
+
+    public static void initialiseSource(int n) {
+        // Method to initialize the source stack with n disks
+        for (int i = n; i > 0; i--) { // Loop to push integers from n to 1 onto the source stack
+            source.push(i); // Pushing the integer onto the source stack
+        }
+    }
+}
+

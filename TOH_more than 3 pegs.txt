@@ -1,0 +1,51 @@
+import java.util.*;
+
+public class TowerOfHanoi2 {
+
+    // Global variable to keep track of the total number of moves
+    static int totalMoves = 0;
+
+    public static void towerOfHanoi(int n, int m) {
+        Stack<Integer>[] pegs = new Stack[m];
+        for (int i = 0; i < m; i++) {
+            pegs[i] = new Stack<>();
+        }
+
+        for (int i = n; i > 0; i--) {
+            pegs[0].push(i);
+        }
+
+        moveDisks(n, m, pegs, 0, 1, 2);
+
+        // Print the total number of moves
+        System.out.println("Total moves: " + totalMoves);
+        System.out.println("Time complexity: O(2^n)");
+        System.out.println("Space complexity: O(" + m + " * n)");
+    }
+
+    public static void moveDisks(int n, int m, Stack<Integer>[] pegs, int from, int to, int aux) {
+        if (n > 0) {
+            moveDisks(n - 1, m, pegs, from, aux, to);
+            int disk = pegs[from].pop();
+            pegs[to].push(disk);
+            totalMoves++; // Increment the total number of moves
+            System.out.println("Move disk " + disk + " from peg " + (from + 1) + " to peg " + (to + 1));
+            moveDisks(n - 1, m, pegs, aux, to, from);
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter the number of disks: ");
+        int n = sc.nextInt();
+
+        System.out.print("Enter the number of pegs: ");
+        int m = sc.nextInt();
+
+        towerOfHanoi(n, m);
+
+        sc.close();
+    }
+}
+
